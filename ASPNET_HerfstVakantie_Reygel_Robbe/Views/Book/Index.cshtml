@@ -1,0 +1,46 @@
+﻿@model BookListViewModel
+
+@{
+    ViewData["Title"] = "Overzicht boeken";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <td><strong>Title</strong></td>
+                <td><strong>Author</strong></td>
+                <td><strong>Created At</strong></td>
+                <td><strong>ISBN</strong></td>
+                <td><strong>Genre</strong></td>
+                <td><strong>Delete</strong></td>
+            </tr>
+            </thead>
+            @foreach (var book in Model.Books)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Book" asp-action="Detail" asp-route-id="@book.Id">@book.Title</a>
+                    </td>
+                    <td>@book.Author</td>
+                    <td>@book.CreationDate.ToLongDateString()</td>
+                    <td>@book.ISBN</td>
+                    <td>@book.Genre</td>
+                    <td>
+                        <a asp-controller="Book" class="btn btn-danger" asp-action="Delete" asp-route-id="@book.Id"
+                           onclick="$.post(this.href).success(window.location.href = '/books');return false; ">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+        
+        <a asp-controller="Book" class="btn btn-success" asp-action="Create" asp-route-id="0"
+           onclick="$.post(this.href).success(window.location.href = '/books/0');return false; ">
+            Create book
+        </a>
+        
+    </div>
+</div>
